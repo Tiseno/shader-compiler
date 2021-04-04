@@ -15,42 +15,42 @@ This was created for nvim and neomake.
 
 ## Filetype
 
-To detect shaders we need to declare a new filetype for vim.
+If you are using some other plugin for shaders/syntax, check if it sets the filetype to something else by going to a shader file and rrunning `:set filetype`. If it says something unrelated to shaders, like 'config', you need to set your own filetype, otherwise you can skip this step and use the filetype name to set up our neomake maker. 'tikhomirov/vim-glsl' will set the filetype to 'glsl' which is fine.
 
-Create the file `~/.config/nvim/filetype.vim` with the following content:
+Otherwise create the file `~/.config/nvim/filetype.vim` with the following content:
 
 ```
 if exists("did_load_filetypes")
   finish
 endif
 augroup filetypedetect
-  au! BufRead,BufNewFile *.frag     setfiletype shader
-  au! BufRead,BufNewFile *.vert     setfiletype shader
-  au! BufRead,BufNewFile *.fragment setfiletype shader
-  au! BufRead,BufNewFile *.vertex   setfiletype shader
+  au! BufRead,BufNewFile *.frag     setfiletype glsl
+  au! BufRead,BufNewFile *.vert     setfiletype glsl
+  au! BufRead,BufNewFile *.fragment setfiletype glsl
+  au! BufRead,BufNewFile *.vertex   setfiletype glsl
 augroup END
 ```
 
-This will set the filetype to 'shader' when loading these file endings.
+This will set the filetype to 'glsl' when loading these file endings.
 
 ## Neomake
 
 In your vimrc or equivalent:
 
 ```
-"shader here can be an arbitrary filetype name
+"glsl here can be an arbitrary filetype name
 "shadercompiler is an arbitrary name linking the filetype to the job
-let g:neomake_shader_shadercompiler_maker = {
+let g:neomake_glsl_shadercompiler_maker = {
     \ 'exe': '<path_to_the_built_shader_compiler_binary>/shader-compiler.out',
     \ 'args': [],
     \ 'errorformat': '%f 0:%l(%c): %trror: %m',
     \ }
-let g:neomake_shader_enabled_makers = ['shadercompiler']
+let g:neomake_glsl_enabled_makers = ['shadercompiler']
 ```
 
 # Disclaimer
 
-I don't really know what i'm doing.
+I don't really know what I'm doing.
 
 For more info `:help new-filetype`, `:help neomake-configuration`, and `:help errorformat`.
 
