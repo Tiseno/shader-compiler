@@ -24,10 +24,12 @@ if exists("did_load_filetypes")
   finish
 endif
 augroup filetypedetect
-  au! BufRead,BufNewFile *.frag     setfiletype glsl
   au! BufRead,BufNewFile *.vert     setfiletype glsl
-  au! BufRead,BufNewFile *.fragment setfiletype glsl
-  au! BufRead,BufNewFile *.vertex   setfiletype glsl
+  au! BufRead,BufNewFile *.tesc     setfiletype glsl
+  au! BufRead,BufNewFile *.tese     setfiletype glsl
+  au! BufRead,BufNewFile *.geom     setfiletype glsl
+  au! BufRead,BufNewFile *.frag     setfiletype glsl
+  au! BufRead,BufNewFile *.comp     setfiletype glsl
 augroup END
 ```
 
@@ -35,7 +37,7 @@ This will set the filetype to 'glsl' when loading these file endings.
 
 ## Neomake
 
-In your vimrc or equivalent:
+In your vimrc or equivalent specify a neomake maker with the path to the shader-compiler:
 
 ```
 "glsl here can be an arbitrary filetype name

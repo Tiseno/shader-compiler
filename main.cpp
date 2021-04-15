@@ -37,10 +37,9 @@ int compileShader(GLuint shaderType, string shaderPath) {
 	return shaderId;
 }
 
-
 int main(int argc, char *argv[]) {
 	// If we have no arguments
-  if(argc < 2) {
+	if(argc < 2) {
 		// TODO Read from std in
 		cout << "shader-compiler error: no file specified" << endl;
 		return 1;
@@ -74,15 +73,28 @@ int main(int argc, char *argv[]) {
 	glCreateProgram();
 
 	for (int i = 1; i < argc; i++) {
-		// Only supports files ending in .frag, .vert, .fragment, and .vertex
-		string args = argv[i];
-		auto isFragmentShader = args.substr(args.length() - 5, 5).compare(".frag") == 0 || args.substr(args.length() - 9, 9).compare(".fragment") == 0;
-		auto isVertexShader = args.substr(args.length() - 5, 5).compare(".vert") == 0 || args.substr(args.length() - 7, 7).compare(".vertex") == 0;
-		if (!isFragmentShader && !isVertexShader) {
-			cout << "shader-compiler error: wrong file type of shader '" << args << "', shader-compiler only supports .frag, .vert, .fragment, and .vertex extensions" << endl;
+		// Only supports files ending in .vert, .tesc, .tese, .geom, .frag, and .comp
+		string arg = argv[i];
+
+		std::string fileEnding = arg.substr(arg.length() - 5, 5);
+		GLenum shaderType;
+		if (fileEnding == ".vert") {
+			shaderType = GL_VERTEX_SHADER;
+		} else if (fileEnding == ".tesc") {
+			shaderType = GL_TESS_CONTROL_SHADER;
+		} else if (fileEnding == ".tese") {
+			shaderType = GL_TESS_EVALUATION_SHADER;
+		} else if (fileEnding == ".geom") {
+			shaderType = GL_GEOMETRY_SHADER;
+		} else if (fileEnding == ".frag") {
+			shaderType = GL_FRAGMENT_SHADER;
+		} else if (fileEnding == ".comp") {
+			shaderType = GL_COMPUTE_SHADER;
+		} else {
+			cout << "shader-compiler error: wrong file type of shader '" << arg << "', shader-compiler only supports .vert, .tesc, .tese, .geom, .frag, and .comp extensions" << endl;
 			return 1;
 		}
-		compileShader(isFragmentShader ? GL_FRAGMENT_SHADER : GL_VERTEX_SHADER, args);
+		compileShader(shaderType, arg);
 	}
 
 	return 0;
