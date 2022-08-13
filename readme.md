@@ -4,10 +4,16 @@ Compiles glsl shaders and reports errors. Uses glew and glfw as that is what I w
 
 # Usage
 
-Install glew and glfw.
-
+Install glew and glfw, on ubuntu
+```
+sudo apt install libglfw3-dev libglew-dev
+```
+then
 ```
 make
+```
+and then you can run it
+```
 ./shader-compiler.out example-shaders/a.frag
 ```
 

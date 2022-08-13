@@ -1,2 +1,8 @@
+FLAGS = `pkg-config --static --libs glew`
+FLAGS += `pkg-config --static --libs glfw3`
+
+FLAGS += `pkg-config --cflags glew`
+FLAGS += `pkg-config --cflags glfw3`
+
 default:
-	g++ main.cpp -std=c++11 -Wall -L/usr/local/lib/ -lGL -lGLU -lglut -lGLEW -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor -o shader-compiler.out
+	g++ main.cpp -std=c++11 -Wall $(FLAGS) -o shader-compiler.out
